@@ -6,26 +6,30 @@ uuidv4 = function() {
 	});
 };
 
-document.getElementById("generate").addEventListener("click", () => {
-	var code = `{
-		"format_version": 2,
-		"header": {
-			"name": "${document.getElementById("name").value}",
-			"description": "${document.getElementById("description").value}",
+code = function() {
+var code = `
+{
+	"format_version": 2,
+	"header": {
+		"name": "${document.getElementById("name").value}",
+		"description": "${document.getElementById("description").value}",
+		"uuid": "${uuidv4()}",
+		"version": [${document.getElementById("version").value}],
+		"min_engine_version": [1, 16, 0]
+	},
+	"modules": [
+		{
+			"type": "${(document.getElementById("type").value)}",
 			"uuid": "${uuidv4()}",
-			"version": [${document.getElementById("version").value}],
-			"min_engine_version": [1, 16, 0]
-		},
-		"modules": [
-			{
-				"type": "${(document.getElementById("type").value)}",
-				"uuid": "${uuidv4()}",
-				"version": [${document.getElementById("version").value}]
-			}
-		]
-	}`;
+			"version": [${document.getElementById("version").value}]
+		}
+	]
+}
+`;
+}
 
-	document.getElementById("output").value = code;
+document.getElementById("generate").addEventListener("click", () => {
+	document.getElementById("output").value = code();
 });
 
 document.getElementById("copyToClipboard").addEventListener("click", () => {
